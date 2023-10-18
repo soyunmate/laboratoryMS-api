@@ -3,15 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>org.soyunmate</groupId>
+		<artifactId>laboratoryMS-api</artifactId>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>com.microservice.results</groupId>
-	<artifactId>microservice-Results</artifactId>
+	<artifactId>microservice-results</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>microservice-Results</name>
+	<name>microservice-results</name>
 	<description>Spring Boot Microservice Results</description>
 	<properties>
 		<java.version>17</java.version>
