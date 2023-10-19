@@ -16,13 +16,13 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api/samples")
+@RequestMapping("/api/v1/samples")
 public class SampleController {
     @Autowired
     private ISampleService sampleService;
 
-    @Autowired
-    private ResponseMapper responseMapper;
+
+    private final ResponseMapper responseMapper = new ResponseMapper();
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> findById(@PathVariable Long id) {
@@ -44,7 +44,7 @@ public class SampleController {
         return ResponseEntity.ok(responseMapper.toResponse(sampleDTOList, "Patient Samples Retrieved", "Sample", HttpStatus.OK));
 
     }
-    @PostMapping("/save")
+    @PostMapping()
     public ResponseEntity<Response> save(@Valid @RequestBody SampleDTO sampleDTO) {
             Sample sample = Sample.builder()
                     .patientId(sampleDTO.getPatientId())
@@ -55,11 +55,12 @@ public class SampleController {
                     .requestedExamsId(sampleDTO.getRequestedExamsId())
                     .reportingDate(sampleDTO.getReportingDate())
                     .receptionDate(sampleDTO.getReceptionDate())
+                    .resultListId(sampleDTO.getResultListId())
                     .build();
 
             sampleService.save(sample);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseMapper.toResponse(sampleDTO,"Sample Received","Sample",HttpStatus.CREATED));
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseMapper.toResponse(sampleDTO,"Sample Received","Sample",HttpStatus.OK));
     }
     @PutMapping("/{id}")
     public ResponseEntity<Response> update(@PathVariable Long id, @Valid @RequestBody SampleDTO sampleDTO) {
