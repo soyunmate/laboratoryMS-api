@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: staff
+          uri: http://localhost:9020
+          predicates:
+            - Path=/api/v1/staff/**
+        - id: samples
+          uri: http://localhost:9090
+          predicates:
+            - Path=/api/v1/samples/**
+        - id: results
+          uri: http://localhost:9030
+          predicates:
+            - Path=/api/v1/results/**
+        - id: patients
+          uri: http://localhost:9050
+          predicates:
+            - Path=/api/v1/patients/**
+        - id: laboratory
+          uri: http://localhost:9040
+          predicates:
+            - Path=/api/v1/laboratory/**
+        - id: inventory
+          uri: http://localhost:9070
+          predicates:
+            - Path=/api/v1/inventory/**
+        - id: exams
+          uri: http://localhost:9060
+          predicates:
+            - Path=/api/v1/exams/**

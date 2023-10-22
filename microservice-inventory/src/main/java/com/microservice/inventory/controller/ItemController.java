@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/items")
+@RequestMapping("/api/v1/inventory/items")
 public class ItemController {
     @Autowired
     private IItemService itemService;

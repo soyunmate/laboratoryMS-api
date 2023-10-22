@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/vendors")
+@RequestMapping("/api/v1/inventory/vendors")
 public class VendorController {
     @Autowired
     private IVendorService vendorService;
