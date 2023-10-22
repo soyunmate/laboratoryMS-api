@@ -10,7 +10,7 @@ public interface IResultService {
     List<Result> findByPatientId(Long patientId);
     List<Result> findBySampleId(Long sampleId);
 
-    List<Result> findByResultIds(Set<Long> resultIds);
+
     Optional<Result> findById(Long id);
 
     void save(Result result);

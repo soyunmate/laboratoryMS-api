@@ -25,10 +25,6 @@ public class ResultServiceImpl implements IResultService {
         return resultRepository.findBySampleId(sampleId);
     }
 
-    @Override
-    public List<Result> findByResultIds(Set<Long> resultIds) {
-        return resultRepository.findByResultIds(resultIds);
-    }
 
     @Override
     public Optional<Result> findById(Long id) {

@@ -13,6 +13,5 @@ import java.util.Set;
 public interface ResultRepository extends CrudRepository<Result, Long> {
     List<Result> findByPatientId(Long patientId);
     List<Result> findBySampleId(Long sampleId);
-    @Query("SELECT r FROM Result r WHERE r.resultId IN :resultIds")
-    List<Result> findByResultIds(@Param("resultIds")Set<Long> resultIds);
+
 }

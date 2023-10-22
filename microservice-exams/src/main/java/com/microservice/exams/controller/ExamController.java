@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController("/api/v1/exams")
+@RestController
+@RequestMapping("/api/v1/exams")
 public class ExamController {
 
     @Autowired

@@ -22,7 +22,7 @@ public class PatientDTO {
     private String rut;
     @NotBlank
     private String email;
-    @NotBlank
+
     private int phone;
 
     private List<Long> sampleIds;
