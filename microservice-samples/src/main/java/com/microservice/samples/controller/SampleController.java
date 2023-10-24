@@ -1,18 +1,26 @@
 package com.microservice.samples.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microservice.common.http.Response;
 import com.microservice.common.mapper.ResponseMapper;
 import com.microservice.samples.controller.dto.SampleDTO;
 import com.microservice.samples.entities.Sample;
+import com.microservice.samples.listeners.KafkaConsumerListener;
 import com.microservice.samples.service.ISampleService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
@@ -20,9 +28,11 @@ import java.util.Optional;
 public class SampleController {
     @Autowired
     private ISampleService sampleService;
-
-
     private final ResponseMapper responseMapper = new ResponseMapper();
+
+    private Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerListener.class);
+
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping("/{id}")
     public ResponseEntity<Response> findById(@PathVariable Long id) {
@@ -103,4 +113,31 @@ public class SampleController {
                 "Sample",
                 HttpStatus.NOT_FOUND));
     }
+
+
+    /*@KafkaListener(topics = {"result_emited"}, groupId = "laboratoryMS-group")
+    public void resultEmitedListener(String message) {
+
+        LOGGER.info("Message received in Controller: "+message);
+
+        try {
+
+            Map<String, Long> mapMessage = objectMapper.readValue(message, Map.class);
+            Optional<Sample> sample = sampleService.findById(mapMessage.get("sampleId"));
+
+            if (sample.isPresent()) {
+                Sample updatedSample = sample.get();
+                Set<Long> resultIds = updatedSample.getResultListId();
+                resultIds.add(mapMessage.get("resultId"));
+
+                updatedSample.setResultListId(resultIds);
+                sampleService.save(updatedSample);
+
+            }
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error:",e);
+        }
+
+    }*/
+
 }

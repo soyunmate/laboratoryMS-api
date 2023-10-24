@@ -10,4 +10,6 @@ import java.util.List;
 public interface SampleRepository extends CrudRepository<Sample, Long> {
 
     List<Sample> findByPatientId(Long patientId);
+
+
 }

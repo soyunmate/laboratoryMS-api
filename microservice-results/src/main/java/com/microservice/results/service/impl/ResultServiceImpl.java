@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ResultServiceImpl implements IResultService {
@@ -32,8 +31,8 @@ public class ResultServiceImpl implements IResultService {
     }
 
     @Override
-    public void save(Result result) {
-        resultRepository.save(result);
+    public Result save(Result result) {
+        return resultRepository.save(result);
     }
 
     @Override

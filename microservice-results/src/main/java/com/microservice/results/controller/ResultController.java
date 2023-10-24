@@ -1,5 +1,7 @@
 package com.microservice.results.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microservice.common.http.Response;
 import com.microservice.common.mapper.ResponseMapper;
 import com.microservice.results.controller.dto.ResultDTO;
@@ -10,19 +12,23 @@ import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/results")
 public class ResultController {
     @Autowired
     private IResultService resultService;
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     private final ResponseMapper responseMapper = new ResponseMapper();
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @GetMapping("/patients/{patientId}")
     public ResponseEntity<Response> findByPatientId(@PathVariable Long patientId) {
         List<ResultDTO> resultDTOList = resultService.findByPatientId(patientId)
@@ -71,7 +77,19 @@ public class ResultController {
                 .url(resultDTO.getUrl())
                 .build();
 
-        resultService.save(result);
+        Result savedResult = resultService.save(result);
+        Map<String,Long> message = new HashMap<>();
+        message.put("sampleId",savedResult.getSampleId());
+        message.put("resultId",savedResult.getId());
+
+        try {
+            String jsonMessage = objectMapper.writeValueAsString(message);
+            kafkaTemplate.send("result_emited","data",jsonMessage);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
 
         return ResponseEntity.ok(responseMapper.toResponse(resultDTO,
                 "Result Saved",

@@ -3,7 +3,7 @@ package com.microservice.common.enums;
 public enum Area {
     MICROBIOLOGY,
     HEMATOLOGY,
-    BIOCHEMSTRY,
+    BIOCHEMISTRY,
     INMUNOLOGY,
     PCR,
 }

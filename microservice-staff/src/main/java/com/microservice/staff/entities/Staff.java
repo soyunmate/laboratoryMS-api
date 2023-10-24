@@ -1,7 +1,8 @@
 package com.microservice.staff.entities;
 
-import com.microservice.staff.entities.enums.Area;
-import com.microservice.staff.entities.enums.Charge;
+import com.microservice.common.enums.Area;
+import com.microservice.common.enums.Charge;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
