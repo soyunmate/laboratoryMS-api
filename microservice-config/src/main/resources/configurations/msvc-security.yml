@@ -1,0 +1,35 @@
+server:
+  port: 8088
+
+jwt:
+  secret:
+    key: ${secret_key}
+  time:
+    expiration: ${exp_date}
+
+spring:
+  application:
+    name: msvc-security
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/laboratorydb
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create
+      show-sql: true
+      properties:
+        hibernate.format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+

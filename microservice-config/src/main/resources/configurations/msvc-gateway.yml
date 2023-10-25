@@ -1,6 +1,13 @@
 server:
   port: 8080
 
+jwt:
+  secret:
+    key: ${secret_key}
+  time:
+    expiration: ${exp_date}
+
+
 spring:
   application:
     name: msvc-gateway
@@ -14,27 +21,46 @@ spring:
           uri: http://localhost:9020
           predicates:
             - Path=/api/v1/staff/**
+          filters:
+            - AuthenticationFilter
         - id: samples
           uri: http://localhost:9090
           predicates:
             - Path=/api/v1/samples/**
+          filters:
+            - AuthenticationFilter
         - id: results
           uri: http://localhost:9030
           predicates:
             - Path=/api/v1/results/**
+          filters:
+            - AuthenticationFilter
         - id: patients
           uri: http://localhost:9050
           predicates:
             - Path=/api/v1/patients/**
+          filters:
+            - AuthenticationFilter
         - id: laboratory
           uri: http://localhost:9040
           predicates:
             - Path=/api/v1/laboratory/**
+          filters:
+            - AuthenticationFilter
         - id: inventory
           uri: http://localhost:9070
           predicates:
             - Path=/api/v1/inventory/**
+          filters:
+            - AuthenticationFilter
         - id: exams
           uri: http://localhost:9060
           predicates:
             - Path=/api/v1/exams/**
+          filters:
+            - AuthenticationFilter
+        - id: security
+          uri: http://localhost:8088
+          predicates:
+            - Path=/auth/**
+
